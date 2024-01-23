@@ -14,7 +14,7 @@ function App() {
       <h1><img id='logo-image' src={bookLogo} />Library App</h1>
       <Login />
       <Navigation />
-      <Books books={fetchBooks} />
+      <Books />
     </>
   )
 }
