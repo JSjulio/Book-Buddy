@@ -4,17 +4,17 @@ import bookLogo from './assets/books.png'
 import Books from './components/Books'
 import Navigation from './components/Navigations'
 import Login from './components/Login'
+import { fetchBooks } from "./api/bookBuddyApi"
 
 function App() {
   const [token, setToken] = useState(null)
 
   return (
     <>
-      <h1><img id='logo-image' src={bookLogo}/>Library App</h1>
+      <h1><img id='logo-image' src={bookLogo} />Library App</h1>
       <Login />
       <Navigation />
-      <Books />
-
+      <Books books={fetchBooks} />
     </>
   )
 }
