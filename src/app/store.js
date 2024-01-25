@@ -1,7 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { rootReducer } from "./root-reducer";
+// store.js
+import { configureStore } from '@reduxjs/toolkit';
+import { mainApi } from '../../api/bookApi'; 
+import rootReducer from './root-reducer'; 
 
-//All reducers are combined in root reducer so you don't need to make any change to the sotry
-export const store = configureStore ({
-    reducer: rootReducer,
-})
+export const store = configureStore({
+  reducer: rootReducer, // rR object contains all the reducers to the app 
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(mainApi.middleware),
+});
+
+export default store;
