@@ -1,4 +1,3 @@
-//Updated
 import { useState } from 'react'
 import bookLogo from './assets/books.png'
 import Books from './components/Books'
@@ -10,7 +9,6 @@ import Registration from './components/Register'
 
 
 function App() {
-  const [token, setToken] = useState(null)
 
   return (
     <>

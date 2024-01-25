@@ -7,19 +7,20 @@ export const mainApi = createApi({
     reducerPath: "mainApi", 
 
     // Define a base query function that all endpoints will use as the base of their request
-    // The base URL for all requests
     baseQuery: fetchBaseQuery({ 
         baseUrl: "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/"
     }),
 
     endpoints: (builder) => ({ 
-        // Define an endpoint for registering users
         register: builder.mutation({
             // Define the query for the mutation
             query: ({ email, password }) => ({
                 url: 'users/register', // The URL for the registration endpoint
                 method: 'POST', // Set the method to POST
-                body: { email, password }, // The registration data to be sent in the request body
+                body: { 
+                    email, 
+                    password 
+                }, // The registration data to be sent in the request body
             }),
         }),
         // ... other endpoints
