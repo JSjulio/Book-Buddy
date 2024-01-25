@@ -12,6 +12,7 @@ export const mainApi = createApi({
     }),
 
     endpoints: (builder) => ({ 
+        
         register: builder.mutation({
             // Define the query for the mutation
             query: ({ email, password }) => ({
