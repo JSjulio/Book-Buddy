@@ -26,7 +26,7 @@ export const mainApi = createApi({
         }),
        login: builder.mutation({   
             query: ({ email, password }) => ({
-                url: 'users/login/me', // The URL for the registration endpoint
+                url: 'users/login', // The URL for the registration endpoint
                 method: 'POST', // Set the method to POST
                 body: { 
                     email, 
