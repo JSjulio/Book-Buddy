@@ -1,0 +1,53 @@
+// COPIED FROM BOOKS
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { useLoginMutation } from "../../api/bookApi";
+
+export const loginUser = createAsyncThunk('login/loginUser', async ({ email, password }) => {
+    try {
+      // Use the useLoginMutation hook to initiate the login mutation
+      const result = await useLoginMutation({ email, password });
+      
+      // 'result' will contain the data returned from the login endpoint
+      // You can process the data or return it as needed
+      return result.data;
+    } catch (error) {
+      // Handle login error, you might want to throw or return a specific error here
+      throw new Error('Login failed');
+    }
+  });
+
+//Set up initial state
+const initialState = {
+  user: null,
+  loading: false,
+  error: null,
+};
+
+
+const accountslice = createSlice({
+    name: 'accounts', //Name of state
+    initialState, //State created abovce
+    reducers: {}, //Reducers can be used for synchronous actions that don't invovle API calls
+
+    //Reducers are dependnecy linked actions
+    extraReducers: (builder) => {
+    
+    builder
+        //While awaiting fetch load books
+        .addCase(fetchBooks.pending, (state) => {
+            state.loading = true;
+        })
+        //If call is succesful render books
+        .addCase(fetchBooks.fulfilled, (state, action) => {
+            state.loading = false;
+            state.allBooks = action.payload;
+        })
+        //If call fails render error
+        .addCase(fetchBooks.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.payload?.message || "An error occured";
+        });
+    },
+});
+
+export default booksSlice.reducer;
