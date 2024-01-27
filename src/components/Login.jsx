@@ -1,12 +1,13 @@
 /* TODO - add your code to create a functional React component that renders a login form */
-import { useState } from "react";
-import { loginUser } from "./LoginSlice";
+import { useState, useContext } from "react";
 import { useLoginMutation } from "../../api/bookApi";
-const Login = ( {onLogin} ) => {
+import { AuthContext } from '../App'
 
+const Login = () => {
     const [login, { isLoading, isError, error}] = useLoginMutation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const { onLogin } = useContext(AuthContext);
 
     async function handleSubmit(event) {
         event.preventDefault();

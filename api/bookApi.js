@@ -21,15 +21,16 @@ export const mainApi = createApi({
             // The part of the URL that comes after the baseUrl for this specific endpoint
             // Define an endpoint that fetches players
         }),
-
-        endpoints: (builder) => ({
-            getReservations: builder.query({
-                query: () => 'reservations',
+        getReservations: builder.query({
+            query: (token) => ({
+                url: 'reservations',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-            Authorization: `Bearer ${TOKEN_STRING_HERE}`,
-            },
+                    Authorization: `Bearer ${token}`,
+                },
             }),
+            transformResponse: (response, meta, arg) => response.reservation,
         }),
 
         register: builder.mutation({

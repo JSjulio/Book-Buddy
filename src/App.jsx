@@ -1,13 +1,15 @@
 //Updated
-import { useState, createContext, useContext } from 'react'
+import { useState, createContext } from 'react'
 import bookLogo from './assets/books.png'
 import Books from './components/Books'
 //import Navigation from './components/Navigations'
 import Login from './components/Login'
-import './bookStyles.css'
-import Registration from './components/Register'
+import Register from './components/Register'
+import ReservedBooks from './components/Books/ReservedBooks'
 
-const AuthContext = createContext();
+import './bookStyles.css'
+
+export const AuthContext = createContext(null);
 
 function App() {
   const [token, setToken] = useState(null)
@@ -16,15 +18,29 @@ function App() {
     setToken(newToken);
   };
 
+  const authContextValue = {
+    token,
+    onLogin: handleLogin
+  };
+
   return (
-    <>
+    <AuthContext.Provider value={authContextValue}>
+
       <h1><img id='logo-image' src={bookLogo} alt='Library Logo' />Library App</h1>
-      <Registration />
-      <Login onLogin ={handleLogin} />
-      <Books token={token} />
-      
-    </>
-  )
+      {token ? (
+        <>
+        <h2>Your books</h2>
+        <ReservedBooks token={token} />
+        </>
+      ) : (
+        <>
+        <Register />
+        <Login />
+        <Books />
+        </>
+      )}
+      </AuthContext.Provider>
+  );
 }
 
 export default App
