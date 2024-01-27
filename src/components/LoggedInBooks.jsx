@@ -2,7 +2,7 @@
 import React from 'react';
 import { useFetchBooksQuery } from '../../api/bookApi';
 
-const Books = () => {
+const LoggedInBooks = () => {
     const { data: books, error, isLoading } = useFetchBooksQuery();
 
     if (isLoading) return <div>Loading books...</div>;
@@ -13,20 +13,33 @@ const Books = () => {
 
     return (
         <div className='bookGrid'>
-            <h1>All Books</h1>
-            {books.length > 0 &&
+            <h1>Available!</h1>
+            {availableBooks.length > 0 && (
                 <div className="grid-container">
-                    {books.map(book => (
+                    {availableBooks.map(book => (
                         <div key={book.id} className='individualBook'>
                             <h3>{book.title}</h3>
                             <p>Author: {book.author}</p>
-                            <img src={book.coverimage} alt={book.title} />
+                            <img src={book.coverimage} />
                         </div>
                     ))}
                 </div>
-            };
+            )}
+            <h1>Not available!</h1>
+            {notAvailableBooks.length > 0 && (
+                <div className="grid-container">
+                    {notAvailableBooks.map(book => (
+                        <div key={book.id} className='individualBook'>
+                            <h3>{book.title}</h3>
+                            <p>Author: {book.author}</p>
+                            <img src={book.coverimage} />
+                        </div>
+                    ))}
+                </div>
+            )}
+
         </div>
     );
 };
 
-export default Books;
+export default LoggedInBooks;

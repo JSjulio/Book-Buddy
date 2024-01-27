@@ -8,6 +8,7 @@ import Register from './components/Register'
 import ReservedBooks from './components/Books/ReservedBooks'
 
 import './bookStyles.css'
+import LoggedInBooks from './components/LoggedInBooks'
 
 export const AuthContext = createContext(null);
 
@@ -25,17 +26,16 @@ function App() {
 
   return (
     <AuthContext.Provider value={authContextValue}>
-
+      <Login />
+      <Register />
       <h1><img id='logo-image' src={bookLogo} alt='Library Logo' />Library App</h1>
       {token ? (
         <>
         <h2>Your books</h2>
-        <ReservedBooks token={token} />
+        <LoggedInBooks />
         </>
       ) : (
         <>
-        <Register />
-        <Login />
         <Books />
         </>
       )}

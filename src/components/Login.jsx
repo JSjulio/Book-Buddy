@@ -21,7 +21,7 @@ const Login = () => {
     
         return (
             <>
-                <h1>Login</h1>
+                <h3>Login</h3>
                 <h2 style={{color:'red'}}>{isError && error.data.message}</h2>
                 <form onSubmit={handleSubmit}>
                     <label>

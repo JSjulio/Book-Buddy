@@ -16,7 +16,7 @@ const ReservedBooks = () => {
             <h2>Reserved Books</h2>
             <ul>
                 {reservations.map(book => (
-                    <li key={book.id}>book.title
+                    <li key={book.id}>
                     <h3>{book.title}</h3>
                     </li>
                 ))}

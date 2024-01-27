@@ -1,3 +1,8 @@
+.login {
+    display: flex;
+    flex-direction: row;
+}
+
 .bookGrid {
     text-align:center;
     margin: 0 auto;

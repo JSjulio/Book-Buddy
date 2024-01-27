@@ -27,7 +27,7 @@ const Registration = () => {
     // Render the form
     return (
         <>
-            <h3>Register Here</h3>
+            <h3>Register</h3>
             <form onSubmit={handleSubmit}>
                 <label>
                     Email:
