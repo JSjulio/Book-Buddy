@@ -3,9 +3,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";// Impo
 // from Redux Toolkit Query's React-specific entry points
 
 
-export const bookApi = createApi({
+export const mainApi = createApi({
     // Define an API using createApi
-    reducerPath: "bookApi",
+    reducerPath: "mainApi",
     // Unique string used in constructing Redux action types, state selectors, and React hook names
 
     baseQuery: fetchBaseQuery({
@@ -21,18 +21,40 @@ export const bookApi = createApi({
             // The part of the URL that comes after the baseUrl for this specific endpoint
             // Define an endpoint that fetches players
         }),
-        userRegistrationMutation: builder.mutation({
-            query: (userData) => ({
-                url: 'user/registration',
-                method: 'POST',
-                body: userData,
+
+        endpoints: (builder) => ({
+            getReservations: builder.query({
+                query: () => 'reservations',
+                headers: {
+                    'Content-Type': 'application/json',
+            Authorization: `Bearer ${TOKEN_STRING_HERE}`,
+            },
             }),
         }),
-    }),
+
+        register: builder.mutation({
+            query: ({ email, password }) => ({
+                url: 'users/register',
+                method: 'POST',
+                body: {
+                    email,
+                    password
+                },
+            }),
+        }),
+
+        login: builder.mutation({
+            query: ({ email, password }) => ({
+                url: 'users/login',
+                method: 'POST',
+                body: {
+                    email,
+                    password
+                },
+            }),
+        }),
+    })
 });
 
 export const {
-    useFetchBooksQuery,
-    useUserRegistrationMutation,
-} = bookApi;
-
+    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery } = mainApi; 

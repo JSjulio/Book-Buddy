@@ -10,6 +10,10 @@
     gap: 20px;
 }
 
+.grid-container img {
+    width: 100%;
+}
+
 .individualBook {
     padding: 20px;
     text-align: left;
