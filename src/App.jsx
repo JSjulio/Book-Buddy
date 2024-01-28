@@ -32,6 +32,7 @@ function App() {
       {token ? (
         <>
         <h2>Your books</h2>
+        <ReservedBooks />
         <LoggedInBooks />
         </>
       ) : (
