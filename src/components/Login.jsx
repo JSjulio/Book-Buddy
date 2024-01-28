@@ -17,26 +17,33 @@ const Login = () => {
 
     async function handleSubmit(event) {
         event.preventDefault();
-        console.log('before token:', isError);
         console.log("Submit clicked 👋");
+        setForm(true);
+
         if (!isError) {
             console.log('error is false; token exists!!! :)');
         } else {
             console.log('error is true; NO token :(')
         }
 
-        const { token } = await login({email, password}).unwrap()
-        console.log('after token:', isError)
+        const data = await login({email, password}).unwrap()
+        console.log('data: ', data)
 
         }
     
         return (
             <>
                 <h1>Login</h1>
-                {isError ? (
+                {!formSubmitted && (
+                    <h3>Welcome! Please sign in to see your account details.</h3>
+        
+                )}
+                {isError && (
                     <h2 style={{color:'red'}}> {error.data.message}</h2>
-                ) : (
-                    <Account email={email}/>
+                )}
+
+                {formSubmitted && !isError && (
+                    <Account />
                 )}
                 <form onSubmit={handleSubmit}>
                     <label>

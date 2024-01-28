@@ -11,8 +11,8 @@ import LoginReducer from '../components/LoginSlice';
  const rootReducer = combineReducers ({
     books: BooksReducer,
     login: LoginReducer,
+    // login reducer authenticates users when they try to login
     [mainApi.reducerPath]: mainApi.reducer,
-    // TODO login reducer
     //add more reducers here: 
   // reducer3: reducer3, 
 }); 
