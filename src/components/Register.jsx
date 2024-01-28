@@ -27,20 +27,24 @@ const Registration = () => {
     // Render the form
     return (
         <>
+            <div class="loginContainer">
             <h3>Register</h3>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Email:
-                    <input type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required />
-                </label>
-                <label>
-                    Password:
-                    <input type="password" name="password" autoComplete="new-password" value={formData.password} onChange={handleChange} required />
-                </label>
-                <button type="submit">Register</button>
-            </form>
-            {token && <div>Your token is: {token}</div>}
-            <hr></hr>
+            <div class="login">
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Email:
+                        <input type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="password" name="password" autoComplete="new-password" value={formData.password} onChange={handleChange} required />
+                    </label>
+                    <button type="submit">Register</button>
+                </form>
+                {token && <div>Your token is: {token}</div>}
+                <hr></hr>
+            </div>
+            </div>
         </>
     );
 };

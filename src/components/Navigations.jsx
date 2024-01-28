@@ -4,6 +4,7 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useSelector } from 'react-redux';
+import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const Navigations = () => {
   // Use useSelector to get the authentication state
@@ -11,7 +12,7 @@ const Navigations = () => {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
-      <LinkContainer to="/books">
+      <LinkContainer to="/">
         <Navbar.Brand>BookBuddy</Navbar.Brand>
       </LinkContainer>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -19,9 +20,18 @@ const Navigations = () => {
         <Nav className="ml-auto">
           {isAuthenticated ? (
             <>
-              <LinkContainer to="/books">
+              <LinkContainer to="/">
                 <Nav.Link>All Books</Nav.Link>
               </LinkContainer>
+
+              <LinkContainer to="/availablebooks">
+                <Nav.Link>Available Books</Nav.Link>
+              </LinkContainer>
+
+              <LinkContainer to="/mybooks">
+                <Nav.Link>My Books</Nav.Link>
+              </LinkContainer>
+
               <LinkContainer to="/account">
                 <Nav.Link>Account</Nav.Link>
               </LinkContainer>

@@ -1,12 +1,13 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../../App';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { useGetReservationsQuery, useReturnBookMutation, useFetchBooksQuery } from '../../../api/bookApi';
 
 const ReservedBooks = () => {
-    const { token } = useContext(AuthContext);
+    // Use useSelector to access the token from Redux store
+    const token = useSelector((state) => state.auth.token);
+
     const { data: reservations, isLoading, isError, refetch: refetchReservations } = useGetReservationsQuery(token);
     const { refetch: refetchBooks } = useFetchBooksQuery();
-
     const [returnBook] = useReturnBookMutation();
 
     console.log('reservations data:', reservations);
@@ -20,12 +21,10 @@ const ReservedBooks = () => {
         .then(() => {
             refetchReservations();
             refetchBooks();
-
         })
         .catch(error => {
             console.error('Error updating the book', error);
         });
-
     };
 
     return (

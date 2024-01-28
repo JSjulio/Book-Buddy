@@ -1,6 +1,12 @@
 .login {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+}
+
+.container {
+    text-align: center;
+    margin: 20px;
 }
 
 .bookGrid {
@@ -22,5 +28,5 @@
 .individualBook {
     padding: 20px;
     text-align: left;
-    background-color: aqua;
+    background-color: rgb(152, 214, 255);
 }

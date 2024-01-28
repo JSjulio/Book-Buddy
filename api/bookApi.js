@@ -21,6 +21,18 @@ export const mainApi = createApi({
             // The part of the URL that comes after the baseUrl for this specific endpoint
             // Define an endpoint that fetches players
         }),
+
+        fetchBookById: builder.query({
+            query: (bookId) => ({
+                url: `books/${bookId}`,
+                method: `GET`,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }),
+            transformResponse: (response, meta, arg) => response.book,
+        }),
+
         getReservations: builder.query({
             query: (token) => ({
                 url: 'reservations',
@@ -83,4 +95,4 @@ export const mainApi = createApi({
 });
 
 export const {
-    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation, useReturnBookMutation } = mainApi; 
+    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation, useReturnBookMutation, useFetchBookByIdQuery } = mainApi; 

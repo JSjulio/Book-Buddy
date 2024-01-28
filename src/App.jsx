@@ -1,47 +1,39 @@
-//Updated
-import { useState, createContext } from 'react'
-import bookLogo from './assets/books.png'
-import Books from './components/Books'
-//import Navigation from './components/Navigations'
-import Login from './components/Login'
-import Register from './components/Register'
-import ReservedBooks from './components/Books/ReservedBooks'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setToken } from './components/AuthSlice';
+import bookLogo from './assets/books.png';
+import Books from './components/Books';
+//import Navigation from './components/Navigations';
 
-import './bookStyles.css'
-import LoggedInBooks from './components/LoggedInBooks'
+import Login from './components/Login';
+import Register from './components/Register';
+import SingleBook from './components/SingleBook';
 
-export const AuthContext = createContext(null);
+import ReservedBooks from './components/Books/ReservedBooks';
+import './bookStyles.css';
+import AvailableBooks from './components/AvailableBooks';
+import Navigations from './components/Navigations';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
-  const [token, setToken] = useState(null)
-
-  const handleLogin = (newToken) => {
-    setToken(newToken);
-  };
-
-  const authContextValue = {
-    token,
-    onLogin: handleLogin
-  };
+  // Use useSelector to access the token from the Redux store
+  const token = useSelector((state) => state.auth.token);
 
   return (
-    <AuthContext.Provider value={authContextValue}>
-      <Login />
-      <Register />
-      <h1><img id='logo-image' src={bookLogo} alt='Library Logo' />Library App</h1>
-      {token ? (
-        <>
-        <h2>Your books</h2>
-        <ReservedBooks />
-        <LoggedInBooks />
-        </>
-      ) : (
-        <>
-        <Books />
-        </>
-      )}
-      </AuthContext.Provider>
+    <div>
+      <Router>
+        <Navigations />
+        <Routes>
+          <Route path="/" element={<Books />} />
+          <Route path="/availablebooks" element={<AvailableBooks />} />
+          <Route path="/mybooks" element={<ReservedBooks />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/books/:bookId" element={<SingleBook />} />
+        </Routes>
+      </Router>
+      </div>
   );
 }
 
-export default App
+export default App;
