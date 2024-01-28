@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useRegisterMutation } from "../../api/bookApi";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Registration = () => {
+
+    const navigate = useNavigate();
 
     //Assign consts registraiton mutation
     const [register, { isLoading, error }] = useRegisterMutation();
@@ -11,6 +15,8 @@ const Registration = () => {
     
     //Set state for token
     const [token, setToken] = useState(null);
+
+    const [registrationSuccess, setRegistrationSuccess] = useState(false); 
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,21 +28,36 @@ const Registration = () => {
         try {
             const result = await register(formData).unwrap();
             setToken(result.token);
+            setRegistrationSuccess(true);
         } catch (err) {
             console.error('error occured:', err);
         }
     };
 
+    useEffect(() => {
+        if (registrationSuccess) {
+            // Navigate to the account page after 2 seconds
+            const timer = setTimeout(() => {
+                navigate('/account'); // Replace '/account' with your account page route
+            }, 2000);
+
+            // Cleanup the timer
+            return () => clearTimeout(timer);
+        }
+    }, [registrationSuccess, navigate]);
+
     if (isLoading) return <div>Loading...</div>;
 
     if (error) return <div>An error occurred: {error.data.message}</div>;
 
+    if (registrationSuccess) return <div>Registration Successful! </div>;
+
     // Render the form
     return (
         <>
-            <div class="loginContainer">
+            <div className="loginContainer">
             <h3>Register</h3>
-            <div class="login">
+            <div className="login">
                 <form onSubmit={handleSubmit}>
                     <label>
                         Email:
