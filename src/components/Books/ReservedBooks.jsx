@@ -1,26 +1,46 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../App';
-import { useGetReservationsQuery } from '../../../api/bookApi';
+import { useGetReservationsQuery, useReturnBookMutation } from '../../../api/bookApi';
 
 const ReservedBooks = () => {
     const { token } = useContext(AuthContext);
     const { data: reservations, isLoading, isError } = useGetReservationsQuery(token);
+
+    const [returnBook] = useReturnBookMutation();
+
+    const { refetch } = useGetReservationsQuery(token);
 
     console.log('reservations data:', reservations);
 
     if (isLoading) return <div>Loading...</div>;
     if (isError || !reservations) return <div>Error fetching reservations</div>;
 
+    const handleReturn = (reservationId) => {    
+        returnBook({ reservationId, token})
+        .unwrap()
+        .then(() => {
+            refetch();
+        })
+        .catch(error => {
+            console.error('Error updating the book', error);
+        });
+
+    };
+
     return (
-        <div>
+        <div className='bookGrid'>
             <h2>Reserved Books</h2>
-            <ul>
-                {reservations.map(book => (
-                    <li key={book.id}>
-                    <h3>{book.title}</h3>
-                    </li>
+            <div className="grid-container">
+                {reservations.map(reservation => (
+                    <div key={reservation.id} className='individualBook'>
+                        <h3>{reservation.title}</h3>
+                        <p>{reservation.id}</p>
+                        <p>Author: {reservation.author}</p>
+                        <img src={reservation.coverimage} alt={reservation.title} />
+                        <button onClick={() => handleReturn(reservation.id)}>Return</button>
+                    </div>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };

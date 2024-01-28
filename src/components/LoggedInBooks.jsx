@@ -1,12 +1,14 @@
 /* TODO - add your code to create a functional React component that displays all of the available books in the library's catalog. Fetch the book data from the provided API. Users should be able to click on an individual book to navigate to the SingleBook component and view its details. */
 import React, { useContext } from 'react';
 import { AuthContext } from '../App'
-import { useFetchBooksQuery, useCheckoutBookMutation, useGetReservationsQuery } from '../../api/bookApi';
+import { useFetchBooksQuery, useCheckoutBookMutation, useGetReservationsQuery, useReturnBookMutation } from '../../api/bookApi';
 
 const LoggedInBooks = () => {
     const { token } = useContext(AuthContext);
     const { data: books, error, isLoading } = useFetchBooksQuery();
+
     const [checkoutBook] = useCheckoutBookMutation();
+
     const { refetch } = useGetReservationsQuery(token);
 
     if (isLoading) return <div>Loading books...</div>;

@@ -47,6 +47,17 @@ export const mainApi = createApi({
             }),
         }),
 
+        returnBook: builder.mutation({
+            query: ({ reservationId, token }) => ({
+                url: `reservations/${reservationId}`,
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+            }),
+        }),
+
         register: builder.mutation({
             query: ({ email, password }) => ({
                 url: 'users/register',
@@ -72,4 +83,4 @@ export const mainApi = createApi({
 });
 
 export const {
-    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation } = mainApi; 
+    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation, useReturnBookMutation } = mainApi; 

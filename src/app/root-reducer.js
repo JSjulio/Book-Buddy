@@ -1,4 +1,4 @@
-import BooksReducer from '../components/BooksSlice';
+
 import { combineReducers } from 'redux';
 import { mainApi } from '../../api/bookApi'; 
 
@@ -8,7 +8,7 @@ import { mainApi } from '../../api/bookApi';
 // ? Combine reducer is then passed into the store.js 
 
  const rootReducer = combineReducers ({
-    books: BooksReducer,
+   
     [mainApi.reducerPath]: mainApi.reducer,
     // TODO login reducer
     //add more reducers here: 
