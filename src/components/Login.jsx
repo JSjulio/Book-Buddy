@@ -1,7 +1,8 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 import { useState } from "react";
-import { loginUser } from "./LoginSlice";
 import { useLoginMutation } from "../../api/bookApi";
+import Account from './Account'
+
 const Login = () => {
 
     const [ login, {
@@ -9,22 +10,34 @@ const Login = () => {
         isError,
         error
     } ] = useLoginMutation();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [formSubmitted, setForm] = useState(false);
 
     async function handleSubmit(event) {
         event.preventDefault();
-        console.log("Hello 👋");
-        const { token } = await login({email, password}).unwrap()
+        console.log('before token:', isError);
+        console.log("Submit clicked 👋");
+        if (!isError) {
+            console.log('error is false; token exists!!! :)');
+        } else {
+            console.log('error is true; NO token :(')
+        }
 
-        console.log('token: ', token)
+        const { token } = await login({email, password}).unwrap()
+        console.log('after token:', isError)
 
         }
     
         return (
             <>
                 <h1>Login</h1>
-                <h2 style={{color:'red'}}>{isError && error.data.message}</h2>
+                {isError ? (
+                    <h2 style={{color:'red'}}> {error.data.message}</h2>
+                ) : (
+                    <Account email={email}/>
+                )}
                 <form onSubmit={handleSubmit}>
                     <label>
                         Email: <input value={email} onChange={(e) => setEmail(e.target.value)}/>
