@@ -8,13 +8,15 @@ const ReservedBooks = () => {
 
     const { data: reservations, isLoading, isError, refetch: refetchReservations } = useGetReservationsQuery(token);
     const { refetch: refetchBooks } = useFetchBooksQuery();
+    
+    //API call for returning books
     const [returnBook] = useReturnBookMutation();
 
-    console.log('reservations data:', reservations);
-
+    //Loading for API
     if (isLoading) return <div>Loading...</div>;
     if (isError || !reservations) return <div>Error fetching reservations</div>;
 
+    //Pass in book id and return
     const handleReturn = (reservationId) => {    
         returnBook({ reservationId, token})
         .unwrap()

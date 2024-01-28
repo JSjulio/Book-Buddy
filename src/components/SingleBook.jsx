@@ -7,11 +7,17 @@ const SingleBook = () => {
     const { bookId } = useParams();
     const { data: book, error, isLoading } = useFetchBookByIdQuery(bookId);
 
+    //Assign token to use selector
     const token = useSelector((state) => state.auth.token);
-    const [checkoutBook] = useCheckoutBookMutation();
-    const isLoggedIn = Boolean(token)
-    const navigate = useNavigate();
 
+    //Assign checkoutbook API mutation
+    const [checkoutBook] = useCheckoutBookMutation();
+
+    //Declare boolean so checkout button only displays when logged in
+    const isLoggedIn = Boolean(token)
+
+    //Navigate for going to previous page
+    const navigate = useNavigate();
     const goBack = () => {
         navigate(-1);
     };
@@ -19,6 +25,7 @@ const SingleBook = () => {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>
 
+    //Checkout book by ID change availability to false
     const handleCheckout = () => {
         if (book && book.available) {
             checkoutBook({ bookId, available: false, token })

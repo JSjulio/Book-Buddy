@@ -22,6 +22,7 @@ export const mainApi = createApi({
             // Define an endpoint that fetches players
         }),
 
+        //Get single book
         fetchBookById: builder.query({
             query: (bookId) => ({
                 url: `books/${bookId}`,
@@ -33,6 +34,7 @@ export const mainApi = createApi({
             transformResponse: (response, meta, arg) => response.book,
         }),
 
+        //Get reserved books
         getReservations: builder.query({
             query: (token) => ({
                 url: 'reservations',
@@ -45,6 +47,7 @@ export const mainApi = createApi({
             transformResponse: (response, meta, arg) => response.reservation,
         }),
 
+        //Checkout book by book id
         checkoutBook: builder.mutation({
             query: ({ bookId, available, token}) => ({
                 url: `books/${bookId}`,
@@ -59,6 +62,7 @@ export const mainApi = createApi({
             }),
         }),
 
+        //Return book by id
         returnBook: builder.mutation({
             query: ({ reservationId, token }) => ({
                 url: `reservations/${reservationId}`,
@@ -70,6 +74,7 @@ export const mainApi = createApi({
             }),
         }),
 
+        //Register new user
         register: builder.mutation({
             query: ({ email, password }) => ({
                 url: 'users/register',
@@ -81,6 +86,7 @@ export const mainApi = createApi({
             }),
         }),
 
+        //Login new user
         login: builder.mutation({
             query: ({ email, password }) => ({
                 url: 'users/login',

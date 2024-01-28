@@ -3,6 +3,7 @@ import React from 'react';
 import { useFetchBooksQuery } from '../../api/bookApi';
 import { Link } from 'react-router-dom';
 
+//Render all books in library
 const Books = () => {
     const { data: books, error, isLoading } = useFetchBooksQuery();
 
