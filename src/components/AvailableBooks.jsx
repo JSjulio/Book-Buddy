@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFetchBooksQuery, useCheckoutBookMutation, useGetReservationsQuery } from '../../api/bookApi';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AvailableBooks = () => {
     // Access the token from Redux store
@@ -10,7 +10,6 @@ const AvailableBooks = () => {
     const { data: books, error: booksError, isLoading: booksLoading, refetch: refetchBooks } = useFetchBooksQuery();
     const [checkoutBook] = useCheckoutBookMutation();
     const { refetch: refetchReservations } = useGetReservationsQuery(token);
-    const navigate = useNavigate();
 
     if (booksLoading) return <div>Loading books...</div>;
     if (booksError) return <div>Error loading books: {booksError.toString()}</div>;
