@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../App';
-import { useGetReservationsQuery, useReturnBookMutation } from '../../../api/bookApi';
+import { useGetReservationsQuery, useReturnBookMutation, useFetchBooksQuery } from '../../../api/bookApi';
 
 const ReservedBooks = () => {
     const { token } = useContext(AuthContext);
-    const { data: reservations, isLoading, isError } = useGetReservationsQuery(token);
+    const { data: reservations, isLoading, isError, refetch: refetchReservations } = useGetReservationsQuery(token);
+    const { refetch: refetchBooks } = useFetchBooksQuery();
 
     const [returnBook] = useReturnBookMutation();
-
-    const { refetch } = useGetReservationsQuery(token);
 
     console.log('reservations data:', reservations);
 
@@ -19,7 +18,9 @@ const ReservedBooks = () => {
         returnBook({ reservationId, token})
         .unwrap()
         .then(() => {
-            refetch();
+            refetchReservations();
+            refetchBooks();
+
         })
         .catch(error => {
             console.error('Error updating the book', error);

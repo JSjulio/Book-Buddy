@@ -25,10 +25,10 @@ const Login = () => {
                 <h2 style={{color:'red'}}>{isError && error.data.message}</h2>
                 <form onSubmit={handleSubmit}>
                     <label>
-                        Email: <input value={email} onChange={(e) => setEmail(e.target.value)}/>
+                        Email: <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
                     </label>
                     <label>
-                        Password: <input value={password} onChange={(e) => setPassword(e.target.value)}/>
+                        Password: <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                     </label>
                     <button>Submit</button>
                 </form>
