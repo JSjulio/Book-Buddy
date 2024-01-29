@@ -78,6 +78,10 @@ form label {
   align-items: center;
 }
 
+.singleBook h2 {
+  text-align: center;
+}
+
 .singleBook button {
   margin: 10px;
 }
