@@ -1,11 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";// Import createApi (function to create an API service) and fetchBaseQuery (a basic fetch wrapper)
+// Import createApi (function to create an API service) and fetchBaseQuery (a basic fetch wrapper)
+// from Redux Toolkit Query's React-specific entry points
 
-// Define an API using createApi
+
 export const mainApi = createApi({
-
+    // Define an API using createApi
+    reducerPath: "mainApi",
     // Unique string used in constructing Redux action types, state selectors, and React hook names
-    reducerPath: "mainApi", 
-
 
     baseQuery: fetchBaseQuery({
         baseUrl: "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/"
@@ -110,54 +111,6 @@ export const mainApi = createApi({
         }),
     })
 });
-
-    // Define a base query function that all endpoints will use as the base of their request
-    baseQuery: fetchBaseQuery({ 
-        baseUrl: "https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/",
-        prepareHeaders: (headers, { getState }) => {
-            // By default, if we have a token in the store, let's use that for authenticated requests
-            const state = getState();
-            const token = state.login.token;
-            if (token) {
-              headers.set('Authorization', `Bearer ${token}`)
-            }
-            return headers
-          },
-    }),
-
-    endpoints: (builder) => ({ 
-        
-        register: builder.mutation({
-            // Define the query for the mutation
-            query: ({ email, password }) => ({
-                url: 'users/register', // The URL for the registration endpoint
-                method: 'POST', // Set the method to POST
-                body: { 
-                    email, 
-                    password 
-                }, // The registration data to be sent in the request body
-            }),
-        }),
-       login: builder.mutation({   
-            query: ({ email, password }) => ({
-                url: 'users/login', // The URL for the registration endpoint
-                method: 'POST', // Set the method to POST, which creates a new token
-                // body = what is sent to server
-                body: { 
-                    email, 
-                    password 
-                },
-            }),
-        }),
-        account: builder.query({   
-            query: () => ({
-                url: 'users/me', // The URL for the registration endpoint
-               // By default, this is a GET request. GET requests don't need a body or specifying as a GET
-            }),
-        }),
-    })
-})
-
 
 export const {
     useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation, useReturnBookMutation, useFetchBookByIdQuery, useAccountQuery } = mainApi; 
