@@ -46,10 +46,6 @@ const accountId = userDetails?.id;
               <LinkContainer to={`/account/${accountId}`}>
                 <Nav.Link>Account</Nav.Link>
               </LinkContainer>
-
-              <LinkContainer to="/accountusers">
-                <Nav.Link>Account Users</Nav.Link>
-              </LinkContainer>
             </>
           ) : (
             <>

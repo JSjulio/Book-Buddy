@@ -18,7 +18,6 @@ import ReservedBooks from './components/Books/ReservedBooks';
 import AvailableBooks from './components/AvailableBooks';
 import Navigations from './components/Navigations';
 import Account from './components/Account';
-import AccountUsers from './components/AccountUsers';
 
 //React Router
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -47,7 +46,6 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/books/:bookId" element={<SingleBook />} />
           <Route path="/account/:accountId" element={<Account />} />
-          <Route path="/accountusers" element={<AccountUsers />} />
         </Routes>
       </Router>
       </div>
