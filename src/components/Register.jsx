@@ -1,56 +1,82 @@
 import { useState } from "react";
 import { useRegisterMutation } from "../../api/bookApi";
 
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 const Registration = () => {
 
-    const [register, { isLoading, error }] = useRegisterMutation(); // access the query from bookAPI query function that is passed into rootReducer / store 
-    const [formData, setFormData] = useState({email: "", password: ""}); // state to hold user data from entry
-    const [token, setToken] = useState(null); // state to hold token from the API 
+    const navigate = useNavigate();
+
+    //Assign consts registraiton mutation
+    const [register, { isLoading, error }] = useRegisterMutation();
+
+    //Form data to be submitted
+    const [formData, setFormData] = useState({ email: "", password: "", });
+    
+    //Set state for token
+    const [token, setToken] = useState(null);
+
+    const [registrationSuccess, setRegistrationSuccess] = useState(false); 
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value }); // set form data to what is entered on the form 
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // asyn function to POST to API 
+    //Wait for form data create token
     const handleSubmit = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         try {
-            const result = await register(formData).unwrap(); //resigter triggers the builder.mutation to POST data to the API and recieve a token
-            setToken(result.token); // capture and set the token from the result 
-
-        } catch (error) {
-            console.error('error occured:', {error}); // console error if API POST fails i.e: exsisting account 
+            const result = await register(formData).unwrap();
+            setToken(result.token);
+            setRegistrationSuccess(true);
+        } catch (err) {
+            console.error('error occured:', err);
         }
     };
 
-    if (isLoading) 
-        return <div>Loading...</div>; // rendered error on web app
+    useEffect(() => {
+        if (registrationSuccess) {
+            // Navigate to the account page after 2 seconds
+            const timer = setTimeout(() => {
+                navigate('/account'); // Replace '/account' with your account page route
+            }, 2000);
 
-    if (error) 
-        return <div>An error occurred: {error.data.message}</div>;
+            // Cleanup the timer
+            return () => clearTimeout(timer);
+        }
+    }, [registrationSuccess, navigate]);
+
+    if (isLoading) return <div>Loading...</div>;
+
+    if (error) return <div>An error occurred: {error.data.message}</div>;
+
+    if (registrationSuccess) return <div>Registration Successful! </div>;
 
     // Render the form
     return (
-    <> 
-        <h3>Register here:</h3>
-        <form onSubmit={handleSubmit}>
-            <label>
-                Email:
-                <input type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required />
-            </label>
-            <label>
-                Password:
-                <input type="password" name="password" autoComplete="new-password" value={formData.password} onChange={handleChange} required />
-            </label>
-            <button type="submit">Register</button>
-        </form>
-        {token && <div>Your token is: {token}</div>} {/* Conditionally render the token if it exists */}
-        <hr></hr>
-    </>
+        <>
+            <div className="loginContainer">
+            <h3>Register</h3>
+            <div className="login">
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        Email:
+                        <input type="email" name="email" autoComplete="email" value={formData.email} onChange={handleChange} required />
+                    </label>
+                    <label>
+                        Password:
+                        <input type="password" name="password" autoComplete="new-password" value={formData.password} onChange={handleChange} required />
+                    </label>
+                    <button type="submit">Register</button>
+                </form>
+                {token && <div>Your token is: {token}</div>}
+                <hr></hr>
+            </div>
+            </div>
+        </>
     );
 };
 
 export default Registration;
 
-
-// account credientials I used: email : isaiasjulio1@icloud.com | pw: qwertyuiop

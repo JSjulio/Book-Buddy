@@ -3,6 +3,7 @@ body {
   background-color: #f8f8f8;
   margin: 0;
   padding: 0;
+
 }
 
 #logo-image {
@@ -10,4 +11,81 @@ body {
   margin-right: 10px;
 }
 
+form {
+  padding: 5px;
+}
+
+form label {
+  margin: 10px;
+}
+
 /* Add your own custom styles here */
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin: 20px;
+}
+
+.loginContainer {
+  text-align: center;
+  margin: 20px;
+}
+
+.bookGrid {
+  padding: 20px;
+  text-align:center;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.grid-container img {
+  width: 100%;
+}
+
+.individualBook {
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  background-color: rgb(152, 214, 255);
+}
+
+.singleBook {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: left;
+  background-color: rgb(152, 214, 255);
+  max-width: 60%;
+}
+
+.singleBook img {
+  width: 80%;
+  align-items: center;
+}
+
+.singleBook button {
+  margin: 10px;
+}
+
+.individualBook button {
+  margin: 10px;
+}
+
+.individualBook a {
+  color: black;
+}

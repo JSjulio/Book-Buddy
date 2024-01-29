@@ -1,63 +1,54 @@
-/* TODO - add your code to create a functional React component that renders a login form */
 import { useState } from "react";
 import { useLoginMutation } from "../../api/bookApi";
-import Account from './Account'
+import { useDispatch } from 'react-redux';
+import { setToken } from './AuthSlice';
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-    const [ login, {
-        isLoading,
-        isError,
-        error
-    } ] = useLoginMutation();
-
+    //API call to login
+    const [login, { isLoading, isError, error}] = useLoginMutation();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [formSubmitted, setForm] = useState(false);
 
+    //Declare dispatch and navigate function
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    //Take token and submit for authentication
     async function handleSubmit(event) {
         event.preventDefault();
-        console.log("Submit clicked 👋");
-        setForm(true);
-
-        if (!isError) {
-            console.log('error is false; token exists!!! :)');
-        } else {
-            console.log('error is true; NO token :(')
+        try {
+            const { token } = await login({ email, password }).unwrap();
+            dispatch(setToken(token)); // Dispatching the setToken action
+            //After succesful log in navigate to available books
+            navigate('/availablebooks')
+        } catch (error) {
+            console.error('Login failed: ', error);
         }
-
-        const data = await login({email, password}).unwrap()
-        console.log('data: ', data)
-
-        }
-    
-        return (
-            <>
-                <h1>Login</h1>
-                {!formSubmitted && (
-                    <h3>Welcome! Please sign in to see your account details.</h3>
-        
-                )}
-                {isError && (
-                    <h2 style={{color:'red'}}> {error.data.message}</h2>
-                )}
-
-                {formSubmitted && !isError && (
-                    <Account />
-                )}
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Email: <input value={email} onChange={(e) => setEmail(e.target.value)}/>
-                    </label>
-                    <label>
-                        Password: <input value={password} onChange={(e) => setPassword(e.target.value)}/>
-                    </label>
-                    <button>Submit</button>
-                </form>
-            </>
-        )
     }
 
-;
+    return (
+        <>
+            <div className="loginContainer">
+            <h3>Login</h3>
+            <p style={{color:'red'}}>{isError && error.data.message}</p>
+            <div className="login">
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Email: 
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                </label>
+                <label>
+                    Password: 
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                </label>
+                <button type="submit" disabled={isLoading}>Submit</button>
+            </form>
+            </div>
+            </div>
+        </>
+    )
+};
 
-export default Login
+export default Login;
