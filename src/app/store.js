@@ -8,4 +8,5 @@ export const store = configureStore({
     getDefaultMiddleware().concat(mainApi.middleware), // concat the default middleware and the API's middleware
 });
 
+
 export default store;
