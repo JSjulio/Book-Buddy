@@ -1,6 +1,7 @@
 import BooksReducer from '../components/BooksSlice';
 import { combineReducers } from 'redux';
 import { mainApi } from '../../api/bookApi'; 
+import LoginReducer from '../components/LoginSlice';
 
 
 //? Root reducer and CombineReducer function 
@@ -9,8 +10,9 @@ import { mainApi } from '../../api/bookApi';
 
  const rootReducer = combineReducers ({
     books: BooksReducer,
+    login: LoginReducer,
+    // login reducer authenticates users when they try to login
     [mainApi.reducerPath]: mainApi.reducer,
-    // TODO login reducer
     //add more reducers here: 
   // reducer3: reducer3, 
 }); 

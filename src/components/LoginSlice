@@ -1,23 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { useLoginMutation } from "../../api/bookApi";
+import { mainApi as api } from "../../api/bookApi";
 
-export const loginUser = createAsyncThunk('login/loginUser', async ({ email, password }) => {
 
-    console.log('thunking')
-    try {
-      // Use the useLoginMutation hook to initiate the login mutation
-      console.log('api running')
-      const result = await useLoginMutation({ email, password });
-      console.log('result: ', result.data)
-      const { token, ...userData } = result.data;
-      return { token, user: userData };
-      }
-     catch (error) {
-        console.log(error)
-      // Handle login error, you might want to throw or return a specific error here
-      throw new Error('Login failed');
-    }
-  });
+// Define the login mutation outside of the createAsyncThunk
+const loginMutation = useLoginMutation;
 
 //Set up initial state
 const initialState = {
@@ -27,31 +14,73 @@ const initialState = {
     error: null,
 };
 
-
 const loginSlice = createSlice({
     name: 'login',
     initialState,
-    reducers: {},
+    reducers: {
+       // auth code:
+        setCredentials: (
+            state,
+            { payload: { user, token } }
+            // payload is the body of the request
+          ) => {
+            state.user = user
+            state.token = token
+          },
+    },
     extraReducers: (builder) => {
-        builder.addCase(loginUser.pending, (state) => {
-          state.loading = true;
-          state.error = null;
+        // auth code:
+        builder.addMatcher(
+            api.endpoints.login.matchFulfilled,
+            (state, { payload }) => {
+              state.token = payload.token
+              state.user = payload.user
         });
+
+        // LATER TO DO: FIX MATCH SYNTAX
+        // TO
+        // end auth code
+        // builder.addMatcher(
+        //     api.endpoints.login.pending, 
+        //     (state) => {
+        //         state.loading = true;
+        //         state.error = null;
+        // });
     
-        builder.addCase(loginUser.fulfilled, (state, action) => {
-          const { token, user } = action.payload;
-          state.loading = false;
-          state.token = token; // Update state.token instead of state.user
-          state.user = user;
-        });
+        // builder.addMatcher(
+        //     api.endpoints.login.fulfilled, (state, action) => {
+        //   const { token, user } = action.payload;
+        //   state.loading = false;
+        //   state.token = token; // Update state.token instead of state.user
+        //   state.user = user;
+        // });
     
-        builder.addCase(loginUser.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.error.message;
-        });
+        // builder.addMatcher(
+        //     api.endpoints.login.rejected, (state, action) => {
+        //   state.loading = false;
+        //   state.error = action.error.message;
+        // });
       },
   });
   
   // Export the async thunk and the reducer
 //   export { loginUser };
   export default loginSlice.reducer;
+
+
+  // OLD CODE
+//   export const loginUser = createAsyncThunk('login/loginUser', async ({ email, password }) => {
+//     console.log('thunking');
+//     try {
+//       // Use the loginMutation function instead of the useLoginMutation hook
+//       console.log('api running');
+//       const result = await loginMutation({ email, password });
+//       console.log('result: ', result.data);
+//       const { token, ...userData } = result.data;
+//       return { token, user: userData };
+//     } catch (error) {
+//       console.log(error);
+//       // Handle login error, you might want to throw or return a specific error here
+//       throw new Error('Login failed');
+//     }
+//   });
