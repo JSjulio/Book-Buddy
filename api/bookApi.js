@@ -14,6 +14,7 @@ export const mainApi = createApi({
         // The base URL for all requests
     }),
 
+
     endpoints: (builder) => ({
         fetchBooks: builder.query({
             query: () => 'books',
@@ -21,6 +22,17 @@ export const mainApi = createApi({
             // The part of the URL that comes after the baseUrl for this specific endpoint
             // Define an endpoint that fetches players
         }),
+        
+        account: builder.query({
+            query: (token) => ({
+              url: 'users/me',
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              }
+            }),
+          }),
 
         //Get single book
         fetchBookById: builder.query({
@@ -49,7 +61,7 @@ export const mainApi = createApi({
 
         //Checkout book by book id
         checkoutBook: builder.mutation({
-            query: ({ bookId, available, token}) => ({
+            query: ({ bookId, available, token }) => ({
                 url: `books/${bookId}`,
                 method: `PATCH`,
                 headers: {
@@ -101,4 +113,4 @@ export const mainApi = createApi({
 });
 
 export const {
-    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation, useReturnBookMutation, useFetchBookByIdQuery } = mainApi; 
+    useFetchBooksQuery, useRegisterMutation, useLoginMutation, useGetReservationsQuery, useCheckoutBookMutation, useReturnBookMutation, useFetchBookByIdQuery, useAccountQuery } = mainApi; 

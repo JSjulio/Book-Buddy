@@ -17,8 +17,8 @@ const Account = () => {
         <>
         <div className='container'>
             <div className='singleBook'>
-            <h2>Account Details</h2>
-                <p><strong>Email:</strong> {userDetails.email}</p>
+            <h2>Account Users</h2>
+                <p>Coming soon</p>
             </div>
         </div>
         </>
