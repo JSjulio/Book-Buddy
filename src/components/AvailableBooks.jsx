@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { useFetchBooksQuery, useCheckoutBookMutation, useGetReservationsQuery } from '../../api/bookApi';
 import { Link } from 'react-router-dom';
@@ -35,8 +34,6 @@ const AvailableBooks = () => {
     };
 
     const availableBooks = books?.filter(book => book.available);
-    const notAvailableBooks = books?.filter(book => !book.available);
-
     return (
         <div className='bookGrid'>
             <h1>Available Books</h1>

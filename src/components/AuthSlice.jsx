@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 //Authorizing login info
 const initialState = {
  token: null,
