@@ -1,5 +1,5 @@
 # Book Buddy
-Visit the Book Buddy web app 🔗 [here](https://jsjulio-bookbuddy.netlify.app/)
+Visit the Book Buddy web app 🔗 [here](https://jsjulio-bookbuddy.netlify.app/).
 
 ## Introduction
 Book Buddy is a React web application that leverages a RESTful book API to create an online bookstore.
@@ -13,4 +13,4 @@ Redux Toolkit is used to manage app state and perform CRUD operations with the b
 React Router is utilized to display the application as a single-page application, allowing seamless navigation through the app for users.
 
 ## Book API
-For more details on the book API click 🔗 [here](https://fsa-book-buddy-b6e748d1380d.herokuapp.com/docs/)
+For more details on the book API click 🔗 [here](https://fsa-book-buddy-b6e748d1380d.herokuapp.com/docs/).
